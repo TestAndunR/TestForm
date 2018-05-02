@@ -15,7 +15,7 @@ exports.handler = function (event, context, callback) {
 		ExpressionAttributeValues: {
 			':email': email
 		},
-		FilterExpression: 'entrymail = :email'
+		FilterExpression: 'email = :email'
 	}, function (err, data) {
 		if (err) {
 			//handle error
