@@ -19,37 +19,7 @@ exports.handler = function (event, context, callback) {
 		}
 	});
 
-	s3.putObject({
-		"Body": username,
-		"Bucket": "userdetailssigma",
-		"Key": username
-	})
-		.promise()
-		.then(data => {
-			console.log(data);           // successful response
-			/*
-			data = {
-				ETag: "\\"6805f2cfc46c0f04559748bb039d69ae\\"", 
-				VersionId: "pSKidl4pHBiNwukdbcPXAIs.sshFFOc0"
-			}
-			*/
-		})
-		.catch(err => {
-			console.log(err, err.stack); // an error occurred
-		});
 
-	ddb.query({
-		TableName: 'userDetails',
-		ExpressionAttributeValues: {},
-		KeyConditionExpression: '',
-		FilterExpression: '',
-	}, function (err, data) {
-		if (err) {
-			//handle error
-		} else {
-			//your logic goes here
-		}
-	});
 
 
 	callback(null, 'Successfully executed');
