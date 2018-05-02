@@ -20,7 +20,7 @@ exports.handler = function (event, context, callback) {
 	});
 	s3.putObject({
 		"Body": username,
-		"Bucket": "userbucket",
+		"Bucket": "userbucket20812",
 		"Key": username
 	})
 		.promise()
