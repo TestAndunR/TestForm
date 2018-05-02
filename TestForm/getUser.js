@@ -3,7 +3,7 @@ const s3 = new AWS.S3();
 const ddb = new AWS.DynamoDB.DocumentClient();
 exports.handler = function (event, context, callback) {
 
-	let searchDate = event.queryStringParameters.date;
+	let email = event.queryStringParameters.email;
 	let response = {
 		body: "",
 		statusCode: 200,
@@ -16,12 +16,16 @@ exports.handler = function (event, context, callback) {
 		if (err) {
 			//handle error
 			console.log("data");
+			response.body = JSON.stringify(err);
+			callback(err,null);
 		} else {
 			console.log("Success");
+			response.body = JSON.stringify(data);
+			callback(null,response);
 			//your logic goes here
 		}
 	});
 	
 
-	callback(null, 'Successfully executed');
+	// callback(null, 'Successfully executed');
 }
