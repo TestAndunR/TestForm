@@ -16,25 +16,7 @@ exports.handler = function (event, context, callback) {
 			//your logic goes here
 		}
 	});
-	s3.putObject({
-		"Body": email,
-		"Bucket": "newuserdetail",
-		"Key": email
-	})
-		.promise()
-		.then(data => {
-			console.log(data);           // successful response
-			/*
-			data = {
-				ETag: "\\"6805f2cfc46c0f04559748bb039d69ae\\"", 
-				VersionId: "pSKidl4pHBiNwukdbcPXAIs.sshFFOc0"
-			}
-			*/
-		})
-		.catch(err => {
-			console.log(err, err.stack); // an error occurred
-		});
-
+	
 
 	callback(null, 'Successfully executed');
 }
