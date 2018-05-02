@@ -15,7 +15,7 @@ exports.handler = function (event, context, callback) {
 		ExpressionAttributeValues: {
 			':email': filePath
 		},
-		FilterExpression: 'email = :email'
+		FilterExpression: 'photo = :email'
 	}, function (err, data) {
 		if (err) {
 			//handle error
@@ -47,7 +47,7 @@ exports.handler = function (event, context, callback) {
 				VersionId: "null"
 			}
 			*/
-			 
+
 			let response = {
 				"statusCode": 200,
 				"headers": {
@@ -57,7 +57,7 @@ exports.handler = function (event, context, callback) {
 				"isBase64Encoded": false
 			};
 			callback(null, response);
-			
+
 		})
 		.catch(err => {
 			console.log(err, err.stack); // an error occurred
