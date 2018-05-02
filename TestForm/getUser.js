@@ -11,7 +11,7 @@ exports.handler = function (event, context, callback) {
 	}
 
 	ddb.scan({
-		TableName: 'userDetails',
+		TableName: 'useDetails',
 		ExpressionAttributeValues: {
 			':email': filePath
 		},
@@ -25,7 +25,7 @@ exports.handler = function (event, context, callback) {
 		} else {
 			console.log("Success");
 			response.body = JSON.stringify(data);
-			callback(null, response);
+			// callback(null, response);
 			//your logic goes here
 		}
 	});
@@ -48,19 +48,14 @@ exports.handler = function (event, context, callback) {
 			}
 			*/
 
-			let response = {
-				"statusCode": 200,
-				"headers": {
-					"my_header": "my_value"
-				},
-				"body": JSON.stringify(data),
-				"isBase64Encoded": false
-			};
+			response.body = JSON.stringify(data);
 			callback(null, response);
 
 		})
 		.catch(err => {
+			response.body = JSON.stringify(err);
 			console.log(err, err.stack); // an error occurred
+			callback(response,null);
 		});
 
 
