@@ -18,7 +18,7 @@ exports.handler = function (event, context, callback) {
 			console.log("Details entered succesfully");
 		}
 	});
-	
+
 	s3.putObject({
 		"Body": username,
 		"Bucket": "userdetailssigma",
@@ -38,6 +38,18 @@ exports.handler = function (event, context, callback) {
 			console.log(err, err.stack); // an error occurred
 		});
 
+	ddb.query({
+		TableName: 'userDetails',
+		ExpressionAttributeValues: {},
+		KeyConditionExpression: '',
+		FilterExpression: '',
+	}, function (err, data) {
+		if (err) {
+			//handle error
+		} else {
+			//your logic goes here
+		}
+	});
 
 
 	callback(null, 'Successfully executed');
