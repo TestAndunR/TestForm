@@ -18,9 +18,10 @@ exports.handler = function (event, context, callback) {
 			console.log("Details entered succesfully");
 		}
 	});
+	
 	s3.putObject({
 		"Body": username,
-		"Bucket": "userbucket20812",
+		"Bucket": "userdetailssigma",
 		"Key": username
 	})
 		.promise()
