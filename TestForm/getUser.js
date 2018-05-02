@@ -3,7 +3,12 @@ const s3 = new AWS.S3();
 const ddb = new AWS.DynamoDB.DocumentClient();
 exports.handler = function (event, context, callback) {
 
-	let email = event.email;
+	let searchDate = event.queryStringParameters.date;
+	let response = {
+		body: "",
+		statusCode: 200,
+		isBase64Encoded: false
+	}
 
 	ddb.scan({
 		TableName: 'userDetails', ExpressionAttributeValues: { ':email': email }
