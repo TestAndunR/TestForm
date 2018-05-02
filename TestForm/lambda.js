@@ -6,14 +6,20 @@ exports.handler = function (event, context, callback) {
 	let username = event.name;
 	let phone = event.phone;
 	let address = event.address;
-	let encodedImage =JSON.parse(event.body).user_avatar;
+	let encodedImage = event.user_avatar;
 	let decodedImage = Buffer.from(encodedImage, 'base64');
 	var filePath = "avatars/" + username + ".jpg"
 
 
 	ddb.put({
 		TableName: 'userDetails',
-		Item: { 'username': username, 'email': email, 'address': address, 'phone': phone }
+		Item: {
+			'username': username,
+			'email': email,
+			'address': address,
+			'phone': phone,
+			'photo': filePath
+		}
 	}, function (err, data) {
 		if (err) {
 			console.log("Details coould not be entered");
