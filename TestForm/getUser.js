@@ -21,7 +21,7 @@ exports.handler = function (event, context, callback) {
 			//handle error
 			console.log("data");
 			response.body = JSON.stringify(err);
-			callback(err, null);
+			callback(response, null);
 		} else {
 			console.log("Success");
 			response.body = JSON.stringify(data);
