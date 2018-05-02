@@ -11,21 +11,25 @@ exports.handler = function (event, context, callback) {
 	}
 
 	ddb.scan({
-		TableName: 'userDetails', ExpressionAttributeValues: { ':email': email }
+		TableName: 'userDetails',
+		ExpressionAttributeValues: {
+			':email': email
+		},
+		FilterExpression: 'entrymail = :email'
 	}, function (err, data) {
 		if (err) {
 			//handle error
 			console.log("data");
 			response.body = JSON.stringify(err);
-			callback(err,null);
+			callback(err, null);
 		} else {
 			console.log("Success");
 			response.body = JSON.stringify(data);
-			callback(null,response);
+			callback(null, response);
 			//your logic goes here
 		}
 	});
-	
+
 
 	// callback(null, 'Successfully executed');
 }
