@@ -13,24 +13,24 @@ exports.handler = function (event, context, callback) {
 
 
 	ddb.scan({
-			TableName: 'userDetails',
-			ExpressionAttributeValues: {
-				':email': email
-			},
-			FilterExpression: 'email = :email'
-		}, function (err, data) {
-			if (err) {
-				//handle error
-				console.log("data");
-				response.body = JSON.stringify(err);
-				callback(response, null);
-			} else {
-				console.log("Success");
-				response.body = JSON.stringify(data);
-				callback(null, response);
-				//your logic goes here
-			}
-	
+		TableName: 'userDetails',
+		ExpressionAttributeValues: {
+			':email': email
+		},
+		FilterExpression: 'email = :email'
+	}, function (err, data) {
+		if (err) {
+			//handle error
+			console.log("data");
+			response.body = JSON.stringify(err);
+			callback(response, null);
+		} else {
+			console.log("Success");
+			response.body = JSON.stringify(data);
+			// callback(null, response);
+			//your logic goes here
+		}
+
 	});
 	s3.getObject({
 		'Bucket': "userdetail.s3.bucket",
@@ -52,15 +52,35 @@ exports.handler = function (event, context, callback) {
 			*/
 
 			response.body = JSON.stringify(data);
-			callback(null, response);
+			// callback(null, response);
 
 		})
 		.catch(err => {
 			response.body = JSON.stringify(err);
 			console.log(err, err.stack); // an error occurred
-			callback(response,null);
+			// callback(response, null);
 		});
 
+	s3.copyObject({
+		'Bucket': "upload-to-s3-sample",
+		'CopySource': "/userdetail.s3.bucket/@{email}",
+		'Key': email
+	}).promise()
+		.then(data => {
+			console.log(data);           // successful response
+			/*
+			data = {
+				CopyObjectResult: {
+					ETag: "\"6805f2cfc46c0f04559748bb039d69ae\"",
+					LastModified: <Date Representation>
+				}
+			}
+			*/
+			console.log("Success");
+		})
+		.catch(err => {
+			console.log(err, err.stack); // an error occurred
+		});
 
 	callback(null, 'Successfully executed');
 }
