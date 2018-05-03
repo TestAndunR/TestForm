@@ -10,36 +10,48 @@ exports.handler = function (event, context, callback) {
 		statusCode: 200,
 		isBase64Encoded: false
 	}
+	ddb.query({
+		TableName: 'userDetails',
+		ExpressionAttributeValues: {},
+		KeyConditionExpression: '',
+		FilterExpression: '',
+	}, function (err, data) {
+		if (err) {
+			//handle error
+		} else {
+			//your logic goes here
+		}
+	});
 
-	ddb.put({
-	// 	TableName: 'userDetails',
-	// 	ExpressionAttributeValues: {
-	// 		':email': filePath
-	// 	},
-	// 	FilterExpression: 'photo = :email'
-	// }, function (err, data) {
-	// 	if (err) {
-	// 		//handle error
-	// 		console.log("data");
-	// 		response.body = JSON.stringify(err);
-	// 		callback(response, null);
-	// 	} else {
-	// 		console.log("Success");
-	// 		response.body = JSON.stringify(data);
-	// 		// callback(null, response);
-	// 		//your logic goes here
-	// 	}
+	ddb.get({
+		// 	TableName: 'userDetails',
+		// 	ExpressionAttributeValues: {
+		// 		':email': filePath
+		// 	},
+		// 	FilterExpression: 'photo = :email'
+		// }, function (err, data) {
+		// 	if (err) {
+		// 		//handle error
+		// 		console.log("data");
+		// 		response.body = JSON.stringify(err);
+		// 		callback(response, null);
+		// 	} else {
+		// 		console.log("Success");
+		// 		response.body = JSON.stringify(data);
+		// 		// callback(null, response);
+		// 		//your logic goes here
+		// 	}
 		TableName: 'userDetails',
 		Item: {
-		// 	'username': username,
-		 	'email': email,
-		// 	'address': address,
-		// 	'phone': phone,
+			// 	'username': username,
+			'email': email,
+			// 	'address': address,
+			// 	'phone': phone,
 			'photo': filePath
 		}
 	}, function (err, data) {
 		if (err) {
-			callback(err,null);
+			callback(err, null);
 			console.log("Details coould not be entered");
 		} else {
 			//your logic goes here
