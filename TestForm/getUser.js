@@ -4,6 +4,7 @@ const ddb = new AWS.DynamoDB.DocumentClient();
 exports.handler = function (event, context, callback) {
 
 	let filePath = event.queryStringParameters.filePath;
+	let email = event.queryStringParameters.email;
 	let response = {
 		body: "",
 		statusCode: 200,
@@ -31,13 +32,14 @@ exports.handler = function (event, context, callback) {
 		TableName: 'userDetails',
 		Item: {
 		// 	'username': username,
-		// 	'email': email,
+		 	'email': email,
 		// 	'address': address,
 		// 	'phone': phone,
 			'photo': filePath
 		}
 	}, function (err, data) {
 		if (err) {
+			callback(err,null);
 			console.log("Details coould not be entered");
 		} else {
 			//your logic goes here
