@@ -15,9 +15,9 @@ exports.handler = function (event, context, callback) {
 	ddb.scan({
 			TableName: 'userDetails',
 			ExpressionAttributeValues: {
-				':email': filePath
+				':email': email
 			},
-			FilterExpression: 'photo = :email'
+			FilterExpression: 'email = :email'
 		}, function (err, data) {
 			if (err) {
 				//handle error
@@ -27,56 +27,40 @@ exports.handler = function (event, context, callback) {
 			} else {
 				console.log("Success");
 				response.body = JSON.stringify(data);
-				// callback(null, response);
+				callback(null, response);
 				//your logic goes here
 			}
-	// 	TableName: 'userDetails',
-	// 	Item: {
-	// 		// 	'username': username,
-	// 		'email': email,
-	// 		// 	'address': address,
-	// 		// 	'phone': phone,
-	// 		'photo': filePath
-	// 	}
-	// }, function (err, data) {
-	// 	if (err) {
-	// 		callback(err, null);
-	// 		console.log("Details coould not be entered",err);
-	// 	} else {
-	// 		//your logic goes here
-	// 		console.log(data)
-	// 		console.log("Details entered succesfully");
-	// 	}
+	
 	});
-	// s3.getObject({
-	// 	'Bucket': "userdetail.s3.bucket",
-	// 	'Key': filePath
-	// }).promise()
-	// 	.then(data => {
-	// 		console.log(data);           // successful response
-	// 		/*
-	// 		data = {
-	// 			AcceptRanges: "bytes", 
-	// 			ContentLength: 3191, 
-	// 			ContentType: "image/jpeg", 
-	// 			ETag: "\\"6805f2cfc46c0f04559748bb039d69ae\\"", 
-	// 			LastModified: <Date Representation>, 
-	// 			Metadata: {...}, 
-	// 			TagCount: 2, 
-	// 			VersionId: "null"
-	// 		}
-	// 		*/
+	s3.getObject({
+		'Bucket': "userdetail.s3.bucket",
+		'Key': filePath
+	}).promise()
+		.then(data => {
+			console.log(data);           // successful response
+			/*
+			data = {
+				AcceptRanges: "bytes", 
+				ContentLength: 3191, 
+				ContentType: "image/jpeg", 
+				ETag: "\\"6805f2cfc46c0f04559748bb039d69ae\\"", 
+				LastModified: <Date Representation>, 
+				Metadata: {...}, 
+				TagCount: 2, 
+				VersionId: "null"
+			}
+			*/
 
-	// 		response.body = JSON.stringify(data);
-	// 		callback(null, response);
+			response.body = JSON.stringify(data);
+			callback(null, response);
 
-	// 	})
-	// 	.catch(err => {
-	// 		response.body = JSON.stringify(err);
-	// 		console.log(err, err.stack); // an error occurred
-	// 		callback(response,null);
-	// 	});
+		})
+		.catch(err => {
+			response.body = JSON.stringify(err);
+			console.log(err, err.stack); // an error occurred
+			callback(response,null);
+		});
 
 
-	// callback(null, 'Successfully executed');
+	callback(null, 'Successfully executed');
 }
