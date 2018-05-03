@@ -10,23 +10,39 @@ exports.handler = function (event, context, callback) {
 		isBase64Encoded: false
 	}
 
-	ddb.scan({
-		TableName: 'useDetails',
-		ExpressionAttributeValues: {
-			':email': filePath
-		},
-		FilterExpression: 'photo = :email'
+	ddb.put({
+	// 	TableName: 'userDetails',
+	// 	ExpressionAttributeValues: {
+	// 		':email': filePath
+	// 	},
+	// 	FilterExpression: 'photo = :email'
+	// }, function (err, data) {
+	// 	if (err) {
+	// 		//handle error
+	// 		console.log("data");
+	// 		response.body = JSON.stringify(err);
+	// 		callback(response, null);
+	// 	} else {
+	// 		console.log("Success");
+	// 		response.body = JSON.stringify(data);
+	// 		// callback(null, response);
+	// 		//your logic goes here
+	// 	}
+		TableName: 'userDetails',
+		Item: {
+			'username': username,
+			'email': email,
+			'address': address,
+			'phone': phone,
+			'photo': filePath
+		}
 	}, function (err, data) {
 		if (err) {
-			//handle error
-			console.log("data");
-			response.body = JSON.stringify(err);
-			callback(response, null);
+			console.log("Details coould not be entered");
 		} else {
-			console.log("Success");
-			response.body = JSON.stringify(data);
-			// callback(null, response);
 			//your logic goes here
+			console.log(data)
+			console.log("Details entered succesfully");
 		}
 	});
 	s3.getObject({
