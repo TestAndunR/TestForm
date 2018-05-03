@@ -10,20 +10,9 @@ exports.handler = function (event, context, callback) {
 		statusCode: 200,
 		isBase64Encoded: false
 	}
-	ddb.query({
-		TableName: 'userDetails',
-		ExpressionAttributeValues: {},
-		KeyConditionExpression: '',
-		FilterExpression: '',
-	}, function (err, data) {
-		if (err) {
-			//handle error
-		} else {
-			//your logic goes here
-		}
-	});
 
-	ddb.get({
+
+	ddb.put({
 		// 	TableName: 'userDetails',
 		// 	ExpressionAttributeValues: {
 		// 		':email': filePath
@@ -52,7 +41,7 @@ exports.handler = function (event, context, callback) {
 	}, function (err, data) {
 		if (err) {
 			callback(err, null);
-			console.log("Details coould not be entered");
+			console.log("Details coould not be entered",err);
 		} else {
 			//your logic goes here
 			console.log(data)
