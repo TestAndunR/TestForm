@@ -11,7 +11,7 @@ exports.handler = function (event, context, callback) {
 		statusCode: 200,
 		isBase64Encoded: false
 	}
-
+	console.log(email);
 
 	ddb.scan({
 		TableName: 'userDetails',
@@ -33,34 +33,34 @@ exports.handler = function (event, context, callback) {
 		}
 
 	});
-	s3.getObject({
-		'Bucket': "userdetail.s3.bucket",
-		'Key': filePath
-	}).promise()
-		.then(data => {
-			console.log(data);           // successful response
-			/*
-			data = {
-				AcceptRanges: "bytes", 
-				ContentLength: 3191, 
-				ContentType: "image/jpeg", 
-				ETag: "\\"6805f2cfc46c0f04559748bb039d69ae\\"", 
-				LastModified: <Date Representation>, 
-				Metadata: {...}, 
-				TagCount: 2, 
-				VersionId: "null"
-			}
-			*/
+	// s3.getObject({
+	// 	'Bucket': "userdetail.s3.bucket",
+	// 	'Key': filePath
+	// }).promise()
+	// 	.then(data => {
+	// 		console.log(data);           // successful response
+	// 		/*
+	// 		data = {
+	// 			AcceptRanges: "bytes", 
+	// 			ContentLength: 3191, 
+	// 			ContentType: "image/jpeg", 
+	// 			ETag: "\\"6805f2cfc46c0f04559748bb039d69ae\\"", 
+	// 			LastModified: <Date Representation>, 
+	// 			Metadata: {...}, 
+	// 			TagCount: 2, 
+	// 			VersionId: "null"
+	// 		}
+	// 		*/
 
-			response.body = JSON.stringify(data);
-			// callback(null, response);
+	// 		response.body = JSON.stringify(data);
+	// 		// callback(null, response);
 
-		})
-		.catch(err => {
-			response.body = JSON.stringify(err);
-			console.log(err, err.stack); // an error occurred
-			// callback(response, null);
-		});
+	// 	})
+	// 	.catch(err => {
+	// 		response.body = JSON.stringify(err);
+	// 		console.log(err, err.stack); // an error occurred
+	// 		// callback(response, null);
+	// 	});
 
 
 
