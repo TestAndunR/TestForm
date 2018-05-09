@@ -19,20 +19,33 @@ exports.handler = function (event, context, callback) {
 			':email': email
 		},
 		FilterExpression: 'email = :email'
-	}, function (err, data) {
-		if (err) {
-			//handle error
+	}).promise()
+		.then(data=> {
+			console.log("Success");
+			response.body = JSON.stringify(data);
+		 	callback(null, response);
+			console.log(response);
+		})
+		.catch(err=>{
 			console.log("data");
 			response.body = JSON.stringify(err);
 			callback(response, null);
-		} else {
-			console.log("Success");
-			response.body = JSON.stringify(data);
-			// callback(null, response);
-			//your logic goes here
-		}
+		})
+	// , function (err, data) {
+	// 	if (err) {
+	// 		//handle error
+	// 		console.log("data");
+	// 		response.body = JSON.stringify(err);
+	// 		callback(response, null);
+	// 	} else {
+	// 		console.log("Success");
+	// 		response.body = JSON.stringify(data);
+	// 	 	callback(null, response);
+	// 		 console.log(response);
+	// 		//your logic goes here
+	// 	}
 
-	});
+	// });
 	// s3.getObject({
 	// 	'Bucket': "userdetail.s3.bucket",
 	// 	'Key': filePath
@@ -64,5 +77,5 @@ exports.handler = function (event, context, callback) {
 
 
 
-	callback(null, 'Successfully executed');
+	// callback(null, 'Successfully executed');
 }
